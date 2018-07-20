@@ -12,15 +12,16 @@ const optionDefinitions = [
     { name: 'pos', alias: 'p', type: Number, description: 'Run first migration at pos (default: 0)', defaultValue: 0 },
     { name: 'one', type: Boolean, description: 'Do not run next migrations', defaultValue: false },
     { name: 'list', alias: 'l', type: Boolean, description: 'Show migration file list (without execution)', defaultValue: false },
-    { name: 'migrations-path', type: String, description: 'The path to the migrations folder' },
-    { name: 'models-path', type: String, description: 'The path to the models folder' },
+    { name: 'migrations-path', type: String, description: 'The path to the migrations folder', defaultValue: "migrations" },
+    { name: 'models-path', type: String, description: 'The path to the models folder', defaultValue: "models" },
+    { name: 'root', type: String, description: 'The path to the root folder', defaultValue: "./" },
     { name: 'help', type: Boolean, description: 'Show this message' }
 ];
 
 const options = commandLineArgs(optionDefinitions);
 
-let migrationsDir = path.join(process.env.PWD, options['migrations-path'] || 'migrations'),
-    modelsDir     = path.join(process.env.PWD, options['models-path'] || 'models');
+let migrationsDir = path.join(process.env.PWD, options['root'], options['migrations-path']),
+    modelsDir     = path.join(process.env.PWD, options['root'], options['models-path']);
 
 if (options.help)
 {

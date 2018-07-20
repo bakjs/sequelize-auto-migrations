@@ -11,11 +11,12 @@ const _                 = require("lodash");
 
 const optionDefinitions = [
     { name: 'preview', alias: 'p', type: Boolean, description: 'Show migration preview (does not change any files)' },
-    { name: 'name', alias: 'n', type: String, description: 'Set migration name (default: "noname")',},
-    { name: 'comment', alias: 'c', type: String, description: 'Set migration comment' },
+    { name: 'name', alias: 'n', type: String, description: 'Set migration name (default: "auto-generated")', defaultValue: "auto-generated"},
+    { name: 'comment', alias: 'c', type: String, description: 'Set migration comment', defaultValue: '' },
     { name: 'execute', alias: 'x', type: Boolean, description: 'Create new migration and execute it' },
-    { name: 'migrations-path', type: String, description: 'The path to the migrations folder' },
-    { name: 'models-path', type: String, description: 'The path to the models folder' },
+    { name: 'migrations-path', type: String, description: 'The path to the migrations folder', defaultValue: "migrations" },
+    { name: 'models-path', type: String, description: 'The path to the models folder', defaultValue: "models" },
+    { name: 'root', type: String, description: 'The path to the root folder', defaultValue: "./" },
     { name: 'help', type: Boolean, description: 'Show this message' }
 ];
 
@@ -31,8 +32,8 @@ if (options.help)
     process.exit(0);    
 }
 
-let migrationsDir = path.join(process.env.PWD, options['migrations-path'] || 'migrations'),
-    modelsDir     = path.join(process.env.PWD, options['models-path'] || 'models');
+let migrationsDir = path.join(process.env.PWD, options['root'], options['migrations-path']),
+    modelsDir     = path.join(process.env.PWD, options['root'], options['models-path']);
 
 
 // current state
@@ -97,8 +98,8 @@ fs.writeFileSync(path.join(migrationsDir, '_current.json'), JSON.stringify(curre
 let info = migrate.writeMigration(currentState.revision, 
                migration,
                migrationsDir,
-               (options.name) ? options.name : 'noname',
-               (options.comment) ? options.comment: '');
+               options.name,
+               options.comment);
 
 console.log(`New migration to revision ${currentState.revision} has been saved to file '${info.filename}'`);
 
