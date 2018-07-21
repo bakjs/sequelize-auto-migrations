@@ -1,40 +1,40 @@
 # sequelize-auto-migrations
-Migration generator &amp;&amp; runner for sequelize
+Migration generator &amp; runner for sequelize
 
 This package provide two tools:
-* `makemigration` - tool for create new migrations
-* `runmigration` - tool for apply created by first tool migrations
+* `generate-migration` - tool for create new migrations
+* `run-migration` - tool for apply created by first tool migrations
 
 ## Install
-`npm install sequelize-auto-migrations`
+`npm install @bakjs/sequelize-auto-migrations`
 
 ## Usage
 * Init sequelize, with sequelize-cli, using `sequelize init`
 * Create your models
 * Create initial migration - run:
 
-`node ./node_modules/sequelize-auto-migrations/bin/makemigration --name <migration name>`
+`node ./node_modules/.bin/generate-migration --name <migration name>`
 * Change models and run it again, model difference will be saved to the next migration
 
 To preview new migration, without any changes, you can run:
 
-`node ./node_modules/sequelize-auto-migrations/bin/makemigration --preview`
+`node ./node_modules/.bin/generate-migration --preview`
 
-`makemigration` tool creates `_current.json` file in `migrations` dir, that is used to calculate difference to the next migration. Do not remove it!
+`generate-migration` tool creates `_current.json` file in `migrations` dir, that is used to calculate difference to the next migration. Do not remove it!
 
 To create and then execute migration, use:
-`makemigration --name <name> -x`
+`generate-migration --name <name> -x`
 
 ## Executing migrations
 * There is simple command to perform all created migrations (from selected revision):
 
-`node ./node_modules/sequelize-auto-migrations/bin/runmigration`
+`node ./node_modules/.bin/run-migration`
 * To select a revision, use `--rev <x>`
 * If migration fails, you can continue, use `--pos <x>`
 * To prevent execution next migrations, use `--one`
 
 
-For more information, use `makemigration --help`, `runmigration --help`
+For more information, use `generate-migration --help`, `run-migration --help`
 
 ## TODO:
 * Migration action sorting procedure need some fixes. When many foreign keys in tables, there is a bug with action order. Now, please check it manually (`--preview` option)
