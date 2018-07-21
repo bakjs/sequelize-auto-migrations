@@ -1,4 +1,4 @@
-#!/bin/node
+#!/usr/bin/env node
 
 const commandLineArgs = require('command-line-args');
 const beautify          = require('js-beautify').js_beautify;
