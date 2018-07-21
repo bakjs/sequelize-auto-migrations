@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "generate-migration": "./bin/makemigration",
-    "run-migration": "./bin/runmigration"
+    "generate-migration": "./bin/makemigration.js",
+    "run-migration": "./bin/runmigration.js"
   },
   "repository": {
     "type": "git",
